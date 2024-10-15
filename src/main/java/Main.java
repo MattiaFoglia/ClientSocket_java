@@ -12,16 +12,27 @@ public class Main {
             Scanner sc = new Scanner(System.in);
             Socket mySocket;
             mySocket = new Socket("localhost", 4316); 
-            String stringRed = "";
+            String stringRead = "";
             BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
-            DataOutputStream out = new DataOutputStream(mySocket.getOutputStream());
+            DataOutputStream out = new DataOutputStream(mySocket.getOutputStream    ());
             do {
-                System.out.println("Insert String : ");
+                System.out.println("Insert String: ");
+
                 String outputString = sc.nextLine();
+               
+                if (outputString.equals("!")) {
+                    out.writeBytes(outputString + '\n');
+                    System.out.println("Server Closed");                    
+                    break;                
+                }
                 out.writeBytes(outputString + '\n');
-                stringRed = in.readLine();
-                System.out.println("String received : " + stringRed);
-            } while(!stringRed.equals("!"));
+                System.out.println("Insert Switch case : ");
+                String outputString2 = sc.nextLine();
+                out.writeBytes(outputString2 + '\n');
+                stringRead = in.readLine();
+                System.out.println("String received : " + stringRead);
+
+            } while(true);
             mySocket.close();
             sc.close();
         } catch (UnknownHostException e) {
